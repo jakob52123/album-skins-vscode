@@ -431,9 +431,21 @@ function activate(context) {
   title.color = new vscode.ThemeColor('albumSkins.title');
   context.subscriptions.push(title);
 
+  // 低调模式一键开关。id 必须不含 albumSkins.title 子串，否则封面 CSS 的精确选择器会误命中，低调下封面会泄漏。
+  const toggle = vscode.window.createStatusBarItem('albumSkins.toggle', vscode.StatusBarAlignment.Right, 1000);
+  toggle.name = '专辑皮肤：低调模式';
+  toggle.command = 'albumSkins.toggleDiscreet';
+  context.subscriptions.push(toggle);
+
   function render() {
+    // toggle 始终显示：低调模式下专辑名 title 会 hide()，但开关要一直在，否则无法再切回来。
+    const discreet = config().get('discreet');
+    toggle.text = discreet ? '$(eye-closed)' : '$(eye)';
+    toggle.tooltip = discreet ? '低调模式已开，点击恢复专辑名与封面' : '点击进入低调模式（隐藏专辑名和封面）';
+    toggle.show();
+
     const album = albumForTheme(currentTheme());
-    if (!album || config().get('discreet')) {
+    if (!album || discreet) {
       title.hide();
       return;
     }
