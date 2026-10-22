@@ -305,27 +305,66 @@ async function removeCustom(slug) {
   if (ctx.globalState.get(OVERRIDE_KEY) === slug) await ctx.globalState.update(OVERRIDE_KEY, '');
 }
 
+/** 边打边搜的专辑选择框。iTunes 每分钟只让查二十来次，所以停手半秒才搜，搜过的词不再搜。 */
+function searchAlbum() {
+  return new Promise((resolve) => {
+    const box = vscode.window.createQuickPick();
+    box.title = '添加专辑';
+    box.placeholder = '歌手、专辑名、歌名都行，中文就可以：霉霉、林俊杰、晴天';
+    // VS Code 默认把标题含输入文字的项挪到最前（一堆叫《晴天》的单曲会压过葉惠美），关掉，保持 iTunes 的顺序。
+    box.sortByLabel = false;
+    const cache = new Map();
+    let timer;
+    let latest = 0;
+    let chosen;
+    const note = (label, description) => [{ label, description, alwaysShow: true }];
+    box.onDidChangeValue((value) => {
+      clearTimeout(timer);
+      const term = value.trim();
+      box.busy = !!term;
+      if (!term) {
+        box.items = [];
+        return;
+      }
+      timer = setTimeout(async () => {
+        const mine = ++latest;
+        let items;
+        try {
+          if (!cache.has(term)) cache.set(term, itunes.search(term));
+          const results = await cache.get(term);
+          // alwaysShow：结果是 iTunes 挑的，别让 VS Code 再按输入框文字把「含《晴天》」的葉惠美滤掉。
+          items = results.length ? results.map((album) => ({
+            label: album.title,
+            description: [album.artist, album.year, album.song && `含《${album.song}》`].filter(Boolean).join(' · '),
+            iconPath: vscode.Uri.parse(itunes.artworkUrl(album.artwork, 60)),
+            alwaysShow: true, album,
+          })) : note(`没搜到「${term}」`, '换个说法：歌手名、专辑名或其中一首歌');
+        } catch (error) {
+          cache.delete(term);
+          items = error.rateLimited ? note('搜得太快，iTunes 让歇一会儿', '过十几秒再改一下关键词')
+            : note(`搜索失败：${error.message}`, '检查一下网络');
+        }
+        if (mine !== latest) return;
+        box.busy = false;
+        box.items = items;
+      }, 500);
+    });
+    box.onDidAccept(() => {
+      chosen = box.selectedItems[0]?.album;
+      if (chosen) box.hide();
+    });
+    box.onDidHide(() => {
+      clearTimeout(timer);
+      box.dispose();
+      resolve(chosen);
+    });
+    box.show();
+  });
+}
+
 async function addAlbum(refresh) {
-  const term = await vscode.window.showInputBox({ prompt: '搜索专辑（专辑名或歌手）', placeHolder: '例如：Taylor Swift 1989' });
-  if (!term) return;
-  let results;
-  try {
-    results = await vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: `正在 iTunes 搜索「${term}」` },
-      () => itunes.search(term));
-  } catch (error) {
-    vscode.window.showErrorMessage(`搜索失败：${error.message}`);
-    return;
-  }
-  if (!results.length) {
-    vscode.window.showInformationMessage(`没搜到「${term}」相关的专辑，换个关键词试试。`);
-    return;
-  }
-  const choice = await vscode.window.showQuickPick(results.map((album) => ({
-    label: album.title, description: `${album.artist}${album.year ? ` · ${album.year}` : ''}`,
-    iconPath: vscode.Uri.parse(itunes.artworkUrl(album.artwork, 60)), album,
-  })), { placeHolder: '选一张专辑', matchOnDescription: true });
-  if (!choice) return;
-  const picked = choice.album;
+  const picked = await searchAlbum();
+  if (!picked) return;
   const existing = albums().find((a) => a.itunesId === picked.itunesId);
   if (existing) {
     await ctx.globalState.update(OVERRIDE_KEY, existing.slug);

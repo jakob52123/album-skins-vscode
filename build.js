@@ -7,7 +7,7 @@ const { rgbaToHex } = require('./lib/color');
 const { NEUTRAL, buildTheme } = require('./lib/theme');
 
 const ROOT = __dirname;
-const VERSION = '2.0.1';
+const VERSION = '2.1.0';
 const REPOSITORY = 'https://github.com/jakob52123/album-skins-vscode';
 const SLOTS = 10;
 
