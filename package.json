@@ -3,7 +3,7 @@
   "displayName": "专辑皮肤 Album Skins",
   "publisher": "jakob",
   "description": "把专辑封面变成 VS Code 主题：内置 16 张周杰伦专辑（深浅各一），也能搜任意专辑自动取色；每日随机，可选渐隐封面。",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -303,15 +303,6 @@
           "dark": "#d59432",
           "light": "#8a6a1c",
           "highContrast": "#ffd27a"
-        }
-      },
-      {
-        "id": "albumSkins.year",
-        "description": "状态栏年份",
-        "defaults": {
-          "dark": "#8a8a8a",
-          "light": "#707070",
-          "highContrast": "#c0c0c0"
         }
       }
     ],

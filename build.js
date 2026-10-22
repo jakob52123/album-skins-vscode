@@ -7,7 +7,7 @@ const { rgbaToHex } = require('./lib/color');
 const { NEUTRAL, buildTheme } = require('./lib/theme');
 
 const ROOT = __dirname;
-const VERSION = '2.0.0';
+const VERSION = '2.0.1';
 const REPOSITORY = 'https://github.com/jakob52123/album-skins-vscode';
 const SLOTS = 10;
 
@@ -81,7 +81,6 @@ function main() {
       themes,
       colors: [
         { id: 'albumSkins.title', description: '状态栏专辑名', defaults: { dark: '#d59432', light: '#8a6a1c', highContrast: '#ffd27a' } },
-        { id: 'albumSkins.year', description: '状态栏年份', defaults: { dark: '#8a8a8a', light: '#707070', highContrast: '#c0c0c0' } },
       ],
       commands: [
         command('pick', '选专辑'), command('next', '换一张'), command('daily', '恢复每日随机'),

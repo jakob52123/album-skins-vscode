@@ -379,29 +379,22 @@ async function addAlbum(refresh) {
 
 function activate(context) {
   ctx = context;
-  // 两段：专辑名用金色，年份压暗。id 固定：封面 CSS 靠这个元素在不在判断低调模式。
+  // 专辑名用金色。id 固定：封面 CSS 靠这个元素在不在判断低调模式。
   const title = vscode.window.createStatusBarItem('albumSkins.title', vscode.StatusBarAlignment.Right, 1001);
-  const year = vscode.window.createStatusBarItem('albumSkins.year', vscode.StatusBarAlignment.Right, 1000);
-  for (const item of [title, year]) {
-    item.name = '专辑皮肤';
-    item.command = 'albumSkins.pick';
-    context.subscriptions.push(item);
-  }
+  title.name = '专辑皮肤';
+  title.command = 'albumSkins.pick';
   title.color = new vscode.ThemeColor('albumSkins.title');
-  year.color = new vscode.ThemeColor('albumSkins.year');
+  context.subscriptions.push(title);
 
   function render() {
     const album = albumForTheme(currentTheme());
     if (!album || config().get('discreet')) {
       title.hide();
-      year.hide();
       return;
     }
     title.text = `$(music) ${album.title}`;
-    year.text = album.year ? String(album.year) : album.artist;
     title.accessibilityInformation = { label: `专辑：${album.title}，${album.artist}` };
     title.show();
-    year.show();
   }
 
   async function refresh(force) {
