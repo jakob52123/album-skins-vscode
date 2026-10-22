@@ -1,4 +1,5 @@
-build.py
+build.js
+lib/*.test.js
 data/**
 docs/**
 *.vsix

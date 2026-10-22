@@ -1,21 +1,23 @@
 {
-  "name": "jay-album-themes",
-  "displayName": "周杰伦专辑皮肤",
+  "name": "album-skins",
+  "displayName": "专辑皮肤 Album Skins",
   "publisher": "jakob",
-  "description": "16 张周杰伦专辑配色的 VS Code 主题（深浅各一），每日随机，可选右侧渐隐专辑封面。",
-  "version": "1.0.0",
+  "description": "把专辑封面变成 VS Code 主题：内置 16 张周杰伦专辑（深浅各一），也能搜任意专辑自动取色；每日随机，可选渐隐封面。",
+  "version": "2.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jakob52123/jay-album-vscode"
+    "url": "https://github.com/jakob52123/album-skins-vscode"
   },
   "bugs": {
-    "url": "https://github.com/jakob52123/jay-album-vscode/issues"
+    "url": "https://github.com/jakob52123/album-skins-vscode/issues"
   },
-  "homepage": "https://github.com/jakob52123/jay-album-vscode#readme",
+  "homepage": "https://github.com/jakob52123/album-skins-vscode#readme",
   "keywords": [
     "theme",
     "color-theme",
+    "album",
+    "music",
     "jay chou",
     "周杰伦",
     "chinese"
@@ -191,11 +193,111 @@
         "label": "周杰伦 · 太阳之子 2026（深）",
         "uiTheme": "vs-dark",
         "path": "./themes/sun-child-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 01（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-01-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 01（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-01-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 02（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-02-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 02（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-02-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 03（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-03-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 03（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-03-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 04（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-04-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 04（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-04-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 05（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-05-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 05（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-05-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 06（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-06-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 06（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-06-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 07（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-07-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 07（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-07-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 08（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-08-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 08（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-08-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 09（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-09-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 09（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-09-dark.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 10（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/slot-10-light.json"
+      },
+      {
+        "label": "专辑皮肤 · 自定义 10（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/slot-10-dark.json"
       }
     ],
     "colors": [
       {
-        "id": "jayAlbum.title",
+        "id": "albumSkins.title",
         "description": "状态栏专辑名",
         "defaults": {
           "dark": "#d59432",
@@ -204,7 +306,7 @@
         }
       },
       {
-        "id": "jayAlbum.year",
+        "id": "albumSkins.year",
         "description": "状态栏年份",
         "defaults": {
           "dark": "#8a8a8a",
@@ -215,33 +317,91 @@
     ],
     "commands": [
       {
-        "command": "jayAlbum.pick",
+        "command": "albumSkins.pick",
         "title": "选专辑",
-        "category": "周杰伦皮肤"
+        "category": "专辑皮肤"
       },
       {
-        "command": "jayAlbum.next",
+        "command": "albumSkins.next",
         "title": "换一张",
-        "category": "周杰伦皮肤"
+        "category": "专辑皮肤"
       },
       {
-        "command": "jayAlbum.daily",
+        "command": "albumSkins.daily",
         "title": "恢复每日随机",
-        "category": "周杰伦皮肤"
+        "category": "专辑皮肤"
+      },
+      {
+        "command": "albumSkins.add",
+        "title": "添加专辑…",
+        "category": "专辑皮肤"
+      },
+      {
+        "command": "albumSkins.toggleDiscreet",
+        "title": "低调模式（开/关）",
+        "category": "专辑皮肤"
       }
     ],
     "configuration": {
-      "title": "周杰伦皮肤",
+      "title": "专辑皮肤",
       "properties": {
-        "jayAlbum.dailyShuffle": {
+        "albumSkins.dailyShuffle": {
           "type": "boolean",
           "default": true,
-          "description": "每天自动换一张专辑（洗牌袋，16 天内不重复）。"
+          "order": 1,
+          "description": "每天自动换一张专辑。"
         },
-        "jayAlbum.syncBackground": {
+        "albumSkins.shuffle": {
+          "type": "string",
+          "default": "all",
+          "enum": [
+            "all",
+            "favorites",
+            "release-order"
+          ],
+          "order": 2,
+          "enumDescriptions": [
+            "从全部专辑（不含排除的）里洗牌，一轮内不重复",
+            "只从收藏的专辑里洗牌",
+            "按发行年份依次轮换"
+          ],
+          "description": "每日换专辑的方式。"
+        },
+        "albumSkins.favorites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "order": 3,
+          "description": "收藏的专辑（在「选专辑」列表里点 ☆ 管理）。"
+        },
+        "albumSkins.excluded": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "order": 4,
+          "description": "不参与每日随机的专辑（在「选专辑」列表里点 ⊘ 管理）。"
+        },
+        "albumSkins.followSystemAppearance": {
           "type": "boolean",
           "default": false,
-          "description": "用 background 插件（shalldie.background）在窗口右侧显示渐隐的专辑封面。封面在首次开启时从 Apple iTunes 下载到本机；换专辑时即时跟着换；关掉会还原原来的背景。"
+          "order": 5,
+          "description": "同一张专辑跟随系统外观：白天浅色、晚上深色（打开 VS Code 的 window.autoDetectColorScheme）。"
+        },
+        "albumSkins.discreet": {
+          "type": "boolean",
+          "default": false,
+          "order": 6,
+          "description": "低调模式：隐藏状态栏专辑名和封面，只保留配色。适合开会投屏。"
+        },
+        "albumSkins.syncBackground": {
+          "type": "boolean",
+          "default": false,
+          "order": 7,
+          "description": "用 background 扩展（shalldie.background）在窗口右侧显示渐隐的专辑封面。封面在首次开启时从 Apple iTunes 下载到本机；换专辑时即时跟着换；关掉会还原原来的背景。"
         }
       }
     }
