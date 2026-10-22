@@ -1,0 +1,5 @@
+*.vsix
+__pycache__/
+.DS_Store
+previous-background.json
+covers/

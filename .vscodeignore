@@ -1,0 +1,7 @@
+build.py
+data/**
+docs/**
+*.vsix
+__pycache__/**
+previous-background.json
+.gitignore

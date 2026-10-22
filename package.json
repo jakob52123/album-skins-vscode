@@ -1,0 +1,249 @@
+{
+  "name": "jay-album-themes",
+  "displayName": "周杰伦专辑皮肤",
+  "publisher": "jakob",
+  "description": "16 张周杰伦专辑配色的 VS Code 主题（深浅各一），每日随机，可选右侧渐隐专辑封面。",
+  "version": "1.0.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jakob52123/jay-album-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/jakob52123/jay-album-vscode/issues"
+  },
+  "homepage": "https://github.com/jakob52123/jay-album-vscode#readme",
+  "keywords": [
+    "theme",
+    "color-theme",
+    "jay chou",
+    "周杰伦",
+    "chinese"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "周杰伦 · Jay 2000（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/jay-light.json"
+      },
+      {
+        "label": "周杰伦 · Jay 2000（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/jay-dark.json"
+      },
+      {
+        "label": "周杰伦 · 范特西 2001（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/fantasy-light.json"
+      },
+      {
+        "label": "周杰伦 · 范特西 2001（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/fantasy-dark.json"
+      },
+      {
+        "label": "周杰伦 · 八度空间 2002（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/the-eight-dimensions-light.json"
+      },
+      {
+        "label": "周杰伦 · 八度空间 2002（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/the-eight-dimensions-dark.json"
+      },
+      {
+        "label": "周杰伦 · 叶惠美 2003（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/yehuimei-light.json"
+      },
+      {
+        "label": "周杰伦 · 叶惠美 2003（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/yehuimei-dark.json"
+      },
+      {
+        "label": "周杰伦 · 七里香 2004（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/common-jasmine-light.json"
+      },
+      {
+        "label": "周杰伦 · 七里香 2004（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/common-jasmine-dark.json"
+      },
+      {
+        "label": "周杰伦 · 11月的萧邦 2005（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/november-chopin-light.json"
+      },
+      {
+        "label": "周杰伦 · 11月的萧邦 2005（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/november-chopin-dark.json"
+      },
+      {
+        "label": "周杰伦 · 依然范特西 2006（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/still-fantasy-light.json"
+      },
+      {
+        "label": "周杰伦 · 依然范特西 2006（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/still-fantasy-dark.json"
+      },
+      {
+        "label": "周杰伦 · 我很忙 2007（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/on-the-run-light.json"
+      },
+      {
+        "label": "周杰伦 · 我很忙 2007（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/on-the-run-dark.json"
+      },
+      {
+        "label": "周杰伦 · 魔杰座 2008（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/capricorn-light.json"
+      },
+      {
+        "label": "周杰伦 · 魔杰座 2008（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/capricorn-dark.json"
+      },
+      {
+        "label": "周杰伦 · 跨时代 2010（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/the-era-light.json"
+      },
+      {
+        "label": "周杰伦 · 跨时代 2010（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/the-era-dark.json"
+      },
+      {
+        "label": "周杰伦 · 惊叹号 2011（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/exclamation-light.json"
+      },
+      {
+        "label": "周杰伦 · 惊叹号 2011（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/exclamation-dark.json"
+      },
+      {
+        "label": "周杰伦 · 十二新作 2012（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/opus-12-light.json"
+      },
+      {
+        "label": "周杰伦 · 十二新作 2012（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/opus-12-dark.json"
+      },
+      {
+        "label": "周杰伦 · 哎呦，不错哦 2014（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/aiyo-light.json"
+      },
+      {
+        "label": "周杰伦 · 哎呦，不错哦 2014（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/aiyo-dark.json"
+      },
+      {
+        "label": "周杰伦 · 周杰伦的床边故事 2016（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/bedtime-stories-light.json"
+      },
+      {
+        "label": "周杰伦 · 周杰伦的床边故事 2016（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/bedtime-stories-dark.json"
+      },
+      {
+        "label": "周杰伦 · 最伟大的作品 2022（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/greatest-works-light.json"
+      },
+      {
+        "label": "周杰伦 · 最伟大的作品 2022（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/greatest-works-dark.json"
+      },
+      {
+        "label": "周杰伦 · 太阳之子 2026（浅）",
+        "uiTheme": "vs",
+        "path": "./themes/sun-child-light.json"
+      },
+      {
+        "label": "周杰伦 · 太阳之子 2026（深）",
+        "uiTheme": "vs-dark",
+        "path": "./themes/sun-child-dark.json"
+      }
+    ],
+    "colors": [
+      {
+        "id": "jayAlbum.title",
+        "description": "状态栏专辑名",
+        "defaults": {
+          "dark": "#d59432",
+          "light": "#8a6a1c",
+          "highContrast": "#ffd27a"
+        }
+      },
+      {
+        "id": "jayAlbum.year",
+        "description": "状态栏年份",
+        "defaults": {
+          "dark": "#8a8a8a",
+          "light": "#707070",
+          "highContrast": "#c0c0c0"
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "jayAlbum.pick",
+        "title": "选专辑",
+        "category": "周杰伦皮肤"
+      },
+      {
+        "command": "jayAlbum.next",
+        "title": "换一张",
+        "category": "周杰伦皮肤"
+      },
+      {
+        "command": "jayAlbum.daily",
+        "title": "恢复每日随机",
+        "category": "周杰伦皮肤"
+      }
+    ],
+    "configuration": {
+      "title": "周杰伦皮肤",
+      "properties": {
+        "jayAlbum.dailyShuffle": {
+          "type": "boolean",
+          "default": true,
+          "description": "每天自动换一张专辑（洗牌袋，16 天内不重复）。"
+        },
+        "jayAlbum.syncBackground": {
+          "type": "boolean",
+          "default": false,
+          "description": "用 background 插件（shalldie.background）在窗口右侧显示渐隐的专辑封面。封面在首次开启时从 Apple iTunes 下载到本机；换专辑时即时跟着换；关掉会还原原来的背景。"
+        }
+      }
+    }
+  }
+}
