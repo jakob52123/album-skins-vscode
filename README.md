@@ -23,7 +23,7 @@
 2. 在 VS Code 的扩展面板点右上角「…」，选「从 VSIX 安装…」（Install from VSIX…）；或者在终端运行：
 
    ```sh
-   code --install-extension album-skins-2.0.1.vsix
+   code --install-extension album-skins-2.2.0.vsix
    ```
 
 装好后会自动切到今天的专辑。
@@ -59,7 +59,21 @@
 1. 安装 background 扩展。
 2. 在设置里打开 `albumSkins.syncBackground`。
 3. 第一次打开时，扩展会从 Apple iTunes 下载 16 张内置封面到本机，大约 3 MB。
-4. background 扩展会提示重载窗口，点确认。只需要这一次，之后换专辑、加专辑，封面都会直接跟着换。
+4. background 扩展会提示重载窗口，点确认。之后换专辑、加专辑，封面都会直接跟着换。
+
+### 背景透明度
+
+| 设置 | 默认值 | 作用 |
+|---|---|---|
+| `albumSkins.backgroundOpacity` | `null` | 通用不透明度；`null` 使用深色 **0.30**、浅色 **0.22** |
+| `albumSkins.backgroundOpacityDark` | `null` | 深色主题覆盖；`null` / 未设置时继承通用值或深色默认值 |
+| `albumSkins.backgroundOpacityLight` | `null` | 浅色主题覆盖；`null` / 未设置时继承通用值或浅色默认值 |
+
+数值范围为 **0.05–0.6**，越大封面越明显；越界数值会限制到此范围，非法值按未设置处理。优先级：深浅覆盖 > 通用值 > 主题默认值。仅在 `albumSkins.syncBackground` 开启时生效。
+
+点状态栏专辑名，在列表里选「调整背景透明度…」，可为当前深浅主题选择预设或「自动」（恢复继承），不会修改另一个主题的覆盖值。
+
+修改后立即重新同步 background 的配置，无需手动重启本扩展；是否能直接显示取决于 background 版本，如提示「Apply and Reload」，仍需确认重载。
 
 需要知道的几件事：
 

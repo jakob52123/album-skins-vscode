@@ -3,7 +3,7 @@
   "displayName": "专辑皮肤 Album Skins",
   "publisher": "jakob",
   "description": "把专辑封面变成 VS Code 主题：内置 16 张周杰伦专辑（深浅各一），也能搜任意专辑自动取色；每日随机，可选渐隐封面。",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -393,6 +393,39 @@
           "default": false,
           "order": 7,
           "description": "用 background 扩展（shalldie.background）在窗口右侧显示渐隐的专辑封面。封面在首次开启时从 Apple iTunes 下载到本机；换专辑时即时跟着换；关掉会还原原来的背景。"
+        },
+        "albumSkins.backgroundOpacity": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "default": null,
+          "minimum": 0.05,
+          "maximum": 0.6,
+          "order": 8,
+          "description": "渐隐封面的不透明度，越大越明显。null 按主题使用默认值（深色 0.30、浅色 0.22）。仅在 syncBackground 开启时生效。"
+        },
+        "albumSkins.backgroundOpacityDark": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "default": null,
+          "minimum": 0.05,
+          "maximum": 0.6,
+          "order": 9,
+          "description": "深色主题的封面不透明度；null 继承 backgroundOpacity，未设置时为 0.30。"
+        },
+        "albumSkins.backgroundOpacityLight": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "default": null,
+          "minimum": 0.05,
+          "maximum": 0.6,
+          "order": 10,
+          "description": "浅色主题的封面不透明度；null 继承 backgroundOpacity，未设置时为 0.22。"
         }
       }
     }

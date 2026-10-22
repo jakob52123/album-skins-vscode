@@ -7,7 +7,7 @@ const { rgbaToHex } = require('./lib/color');
 const { NEUTRAL, buildTheme } = require('./lib/theme');
 
 const ROOT = __dirname;
-const VERSION = '2.1.0';
+const VERSION = '2.2.0';
 const REPOSITORY = 'https://github.com/jakob52123/album-skins-vscode';
 const SLOTS = 10;
 
@@ -100,6 +100,18 @@ function main() {
           'albumSkins.followSystemAppearance': { type: 'boolean', default: false, order: 5, description: '同一张专辑跟随系统外观：白天浅色、晚上深色（打开 VS Code 的 window.autoDetectColorScheme）。' },
           'albumSkins.discreet': { type: 'boolean', default: false, order: 6, description: '低调模式：隐藏状态栏专辑名和封面，只保留配色。适合开会投屏。' },
           'albumSkins.syncBackground': { type: 'boolean', default: false, order: 7, description: '用 background 扩展（shalldie.background）在窗口右侧显示渐隐的专辑封面。封面在首次开启时从 Apple iTunes 下载到本机；换专辑时即时跟着换；关掉会还原原来的背景。' },
+          'albumSkins.backgroundOpacity': {
+            type: ['number', 'null'], default: null, minimum: 0.05, maximum: 0.6, order: 8,
+            description: '渐隐封面的不透明度，越大越明显。null 按主题使用默认值（深色 0.30、浅色 0.22）。仅在 syncBackground 开启时生效。',
+          },
+          'albumSkins.backgroundOpacityDark': {
+            type: ['number', 'null'], default: null, minimum: 0.05, maximum: 0.6, order: 9,
+            description: '深色主题的封面不透明度；null 继承 backgroundOpacity，未设置时为 0.30。',
+          },
+          'albumSkins.backgroundOpacityLight': {
+            type: ['number', 'null'], default: null, minimum: 0.05, maximum: 0.6, order: 10,
+            description: '浅色主题的封面不透明度；null 继承 backgroundOpacity，未设置时为 0.22。',
+          },
         },
       },
     },

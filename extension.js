@@ -8,6 +8,7 @@ const manifest = require('./albums.json');
 const { buildTheme } = require('./lib/theme');
 const { decodePng, generate } = require('./lib/palette');
 const itunes = require('./lib/itunes');
+const { resolveBackgroundOpacity } = require('./lib/background');
 
 const STATE_KEY = 'daily-v2';
 const OVERRIDE_KEY = 'override';
@@ -17,7 +18,6 @@ const PREVIOUS_AUTODETECT_KEY = 'previous-auto-detect';
 const MARKERS = ['--album-skins', '--jay-album'];
 // 仿 pi-web：封面靠右、往左渐隐。
 const FADE = 'linear-gradient(to left, #000 0%, rgba(0,0,0,.75) 25%, transparent 62%)';
-const OPACITY = { light: 0.12, dark: 0.16 };
 const TRANSPARENT = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
 const SLOT_LABELS = new Set(manifest.slots.flatMap((slot) => [slot.light, slot.dark]));
 
@@ -197,10 +197,16 @@ function thumbFile(album) {
 
 /**
  * 换封面不重载：借 background 扩展的自定义样式，塞进「主题 class → 封面」的 CSS 规则。
- * 规则只跟内置专辑和空位有关，加删自定义专辑不改规则，background 配置因此只写一次。
+ * 规则只跟内置专辑、空位和透明度有关；加删自定义专辑不改规则。
  * 每条规则都要求状态栏专辑名在 DOM 里：低调模式隐藏它，封面跟着即时消失。
  */
 function coverConfig() {
+  const settings = config();
+  const opacity = resolveBackgroundOpacity({
+    backgroundOpacity: settings.get('backgroundOpacity'),
+    backgroundOpacityDark: settings.get('backgroundOpacityDark'),
+    backgroundOpacityLight: settings.get('backgroundOpacityLight'),
+  });
   const gate = `:has([id="${ctx.extension.id}.albumSkins.title"])`;
   const themes = ctx.extension.packageJSON.contributes.themes;
   const classOf = new Map(themes.map((t) => [t.label, themeClass(t.path)]));
@@ -211,12 +217,12 @@ function coverConfig() {
   const rules = covers.flatMap(({ album, file }) => ['light', 'dark'].flatMap((mode) => {
     const scope = `body:has(> .monaco-workbench.${classOf.get(album[mode])})${gate}`;
     const url = fileUrl(file);
-    return `${scope}::after{background-image:url(${url}) !important;opacity:${OPACITY[mode]} !important}`;
+    return `${scope}::after{background-image:url(${url}) !important;opacity:${opacity[mode]} !important}`;
   }));
   // 值里先闭合 body::after，再接各条规则，最后重开一个 body::after 接住插件追加的兜底图（透明 1px）。
   const inject = `0}${rules.join('')}body::after{--album-skins-end:0`;
   return {
-    images: [TRANSPARENT], opacity: OPACITY.dark, size: 'auto 100%', position: 'right center',
+    images: [TRANSPARENT], opacity: opacity.dark, size: 'auto 100%', position: 'right center',
     styles: [{ '-webkit-mask-image': FADE, 'mask-image': FADE, '--album-skins': inject }], interval: 0, random: false,
   };
 }
@@ -452,6 +458,17 @@ function activate(context) {
     await config().update(key, next, vscode.ConfigurationTarget.Global);
   }
 
+  async function pickOpacity() {
+    const mode = currentIsDark() ? 'Dark' : 'Light';
+    const picked = await vscode.window.showQuickPick([
+      { label: '自动', description: '当前主题继承通用设置；默认深色 30%、浅色 22%', value: null },
+      ...[0.12, 0.22, 0.30, 0.45, 0.6].map((value) => ({
+        label: `${Math.round(value * 100)}%`, value,
+      })),
+    ], { placeHolder: `调整${mode === 'Dark' ? '深色' : '浅色'}主题背景透明度（数值越大越明显）` });
+    if (picked) await config().update(`backgroundOpacity${mode}`, picked.value, vscode.ConfigurationTarget.Global);
+  }
+
   async function pick() {
     const override = context.globalState.get(OVERRIDE_KEY, '');
     const todays = findAlbum(await daily(false));
@@ -483,6 +500,7 @@ function activate(context) {
       return [
         { label: '每日随机', description: `${override ? '' : '✓ '}今天是《${todays?.title}》`, iconPath: new vscode.ThemeIcon('calendar'), slug: '' },
         { label: '添加专辑…', description: '搜任意专辑，用封面自动取色', iconPath: new vscode.ThemeIcon('add'), action: 'add' },
+        { label: '调整背景透明度…', description: '当前深浅主题的封面预设', iconPath: new vscode.ThemeIcon('settings-gear'), action: 'opacity' },
         { label: builtin[0]?.artist || '内置', kind: vscode.QuickPickItemKind.Separator },
         ...builtin.map(row),
         ...(custom.length ? [{ label: '我加的专辑', kind: vscode.QuickPickItemKind.Separator }, ...custom.map(row)] : []),
@@ -492,8 +510,8 @@ function activate(context) {
     let accepted = false;
     let timer;
     quickPick.onDidChangeActive(([item]) => {
-      if (!item || item.action) return;
       clearTimeout(timer);
+      if (!item || item.action) return;
       timer = setTimeout(() => apply(item.slug || todays?.slug, original.dark), 150);
     });
     quickPick.onDidTriggerItemButton(async ({ item, button: { action } }) => {
@@ -510,6 +528,12 @@ function activate(context) {
       accepted = true;
       quickPick.hide();
       clearTimeout(timer);
+      if (item.action === 'opacity') {
+        // 列表可能已预览其他专辑，先还原再调整，不改变手动选择。
+        await setGlobal('workbench', 'colorTheme', original.theme);
+        await pickOpacity();
+        return;
+      }
       if (item.action === 'add') {
         await addAlbum(refresh);
         return;
@@ -554,9 +578,12 @@ function activate(context) {
     vscode.workspace.onDidChangeConfiguration(async (event) => {
       if (event.affectsConfiguration('albumSkins.discreet')) render();
       if (event.affectsConfiguration('albumSkins.followSystemAppearance')) await syncAppearance();
-      if (event.affectsConfiguration('albumSkins.syncBackground')) {
+      const syncChanged = event.affectsConfiguration('albumSkins.syncBackground');
+      const opacityChanged = ['backgroundOpacity', 'backgroundOpacityDark', 'backgroundOpacityLight']
+        .some((key) => event.affectsConfiguration(`albumSkins.${key}`));
+      if (syncChanged || opacityChanged) {
         if (config().get('syncBackground')) await applyCover();
-        else await restoreBackground();
+        else if (syncChanged) await restoreBackground();
       }
     }),
   );
